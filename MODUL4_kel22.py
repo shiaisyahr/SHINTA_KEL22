@@ -1,0 +1,109 @@
+# =========================================================
+# PROGRAM CREATED BY KELOMPOK 22
+# NAMA PROGRAM: Sistem Pendaftaran Turnamen E-Sports
+# =========================================================
+
+# 1. FUNCTION: Non-return type (Tanpa Parameter)
+# Memenuhi syarat: Function tanpa return
+def tampilkan_watermark():
+    print("=" * 45)
+    print("      PROGRAM PENDAFTARAN TURNAMEN E-SPORTS  ")
+    print("           BY: KELOMPOK 22                   ")
+    print("=" * 45)
+
+# 2. FUNCTION: Return type (Berparameter)
+# Memenuhi syarat: Function dengan return type berparameter
+def hitung_biaya_pendaftaran(jumlah_tim, harga_per_tim):
+    total_biaya = jumlah_tim * harga_per_tim
+    
+    # [PENGKONDISIAN] di dalam function
+    # Jika yang mendaftar lebih dari atau sama dengan 3 tim, dapat diskon 10%
+    if jumlah_tim >= 3:
+        diskon = total_biaya * 0.1
+        total_biaya -= diskon
+        
+    return total_biaya
+
+# Definisi Class untuk Method
+class Turnamen:
+    def __init__(self, nama_turnamen):
+        self.nama_turnamen = nama_turnamen
+        self.daftar_tim = [] # List kosong untuk menyimpan data tim
+
+    # 3. METHOD: Non-return type (Berparameter)
+    # Memenuhi syarat: Karena function di atas pakai return, method ini WAJIB non-return (void)
+    def tambah_tim(self, nama_tim, jumlah_anggota):
+        # [PENGKONDISIAN]
+        if jumlah_anggota < 5:
+            print(f"❌ Gagal! Tim '{nama_tim}' kekurangan anggota. (Minimal 5 orang)")
+        elif jumlah_anggota > 6:
+            print(f"❌ Gagal! Tim '{nama_tim}' kelebihan anggota. (Maksimal 6 orang termasuk cadangan)")
+        else:
+            self.daftar_tim.append(nama_tim)
+            print(f"✅ Berhasil! Tim '{nama_tim}' resmi didaftarkan.")
+
+    # 4. METHOD: Return type (Tanpa Parameter)
+    # Memenuhi syarat: Method return type tanpa parameter
+    def ambil_total_tim(self):
+        return len(self.daftar_tim)
+
+    # 5. METHOD: Non-return type (Tanpa Parameter)
+    def tampilkan_semua_tim(self):
+        print(f"\n--- Daftar Tim di {self.nama_turnamen} ---")
+        
+        # [PENGKONDISIAN]
+        if len(self.daftar_tim) == 0:
+            print("Belum ada tim yang mendaftar.")
+        else:
+            # [PERULANGAN] for loop
+            for i in range(len(self.daftar_tim)):
+                print(f"{i + 1}. Tim {self.daftar_tim[i]}")
+
+
+# =========================================================
+# MAIN PROGRAM (Blok Utama)
+# =========================================================
+def main():
+    
+    tampilkan_watermark()
+    
+    # Inisialisasi Object
+    turnamen_sekolah = Turnamen("Turnamen Kemerdekaan 2026")
+    
+    
+    while True:
+        print("\nMenu Pendaftaran:")
+        print("1. Daftar Tim Baru")
+        print("2. Lihat Semua Tim")
+        print("3. Cek Total Pendaftar & Pemasukan Tiket")
+        print("4. Keluar")
+        
+        pilihan = input("Pilih menu (1-4): ")
+        
+        # [PENGKONDISIAN]
+        if pilihan == '1':
+            nama = input("Masukkan Nama Tim: ")
+            anggota = int(input("Masukkan Jumlah Anggota (5-6 orang): "))
+            turnamen_sekolah.tambah_tim(nama, anggota) 
+            
+        elif pilihan == '2':
+            turnamen_sekolah.tampilkan_semua_tim()     
+            
+        elif pilihan == '3':
+            total = turnamen_sekolah.ambil_total_tim() 
+            print(f"\nJumlah tim yang sudah daftar: {total} tim.")
+            
+            # Memanggil Function Return berparameter
+            biaya = hitung_biaya_pendaftaran(total, 50000) 
+            print(f"Estimasi pemasukan pendaftaran (setelah diskon jika ada): Rp {int(biaya)}")
+            
+        elif pilihan == '4':
+            print("Terima kasih telah menggunakan sistem pendaftaran kami!")
+            break
+            
+        else:
+            print("⚠️ Pilihan tidak valid, silakan ketik 1, 2, 3, atau 4.")
+
+# Memastikan program dijalankan langsung
+if __name__ == "__main__":
+    main()
